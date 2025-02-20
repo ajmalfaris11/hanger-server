@@ -1,0 +1,22 @@
+{
+  "name": "hanger_server",
+  "version": "1.0.0",
+  "description": "MERN Stack application with MongoDB, Express.js, React and Node.js for my hanger E-comers application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ajmalfaris11/hanger-server.git"
+  },
+  "keywords": [
+    "MERN"
+  ],
+  "author": "Ajmal Faris",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ajmalfaris11/hanger-server/issues"
+  },
+  "homepage": "https://github.com/ajmalfaris11/hanger-server#readme"
+}
