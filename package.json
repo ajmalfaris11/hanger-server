@@ -20,6 +20,6 @@
   },
   "homepage": "https://github.com/ajmalfaris11/hanger-server#readme",
   "dependencies": {
-    "expres": "^0.0.5"
+    "express": "^4.21.2"
   }
 }
