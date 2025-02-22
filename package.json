@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/ajmalfaris11/hanger-server/issues"
   },
-  "homepage": "https://github.com/ajmalfaris11/hanger-server#readme"
+  "homepage": "https://github.com/ajmalfaris11/hanger-server#readme",
+  "dependencies": {
+    "expres": "^0.0.5"
+  }
 }
