@@ -1,5 +1,4 @@
 const { app } = require(".");
-const { connectDb } = require("./config/db");
 
 const PORT= 4647;
 app.listen(PORT, ()=>{
