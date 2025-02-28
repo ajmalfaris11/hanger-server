@@ -66,12 +66,22 @@ const getUserProfileByToken = async (token) => {
       throw new Error("user not exist with id : ", userId);
     }
     return user;
-    
+
   } catch (error) {
     console.log("error ----- ", error.message);
     throw new Error(error.message);
   }
 };
+
+const getAllUsers=async()=>{
+    try {
+        const users=await User.find();
+        return users;
+    } catch (error) {
+        console.log("error - ",error)
+        throw new Error(error.message)
+    }
+}
 
  
 module.exports = {
@@ -79,4 +89,5 @@ module.exports = {
   findUserById,
   findUserByEmail,
   getUserProfileByToken,
+  getAllUsers
 };
