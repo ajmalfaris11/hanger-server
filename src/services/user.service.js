@@ -43,12 +43,28 @@ const findUserById=async(userId)=>{
     }
 }
 
+const findUserByEmail=async(email)=>{
 
+    try {
 
+        const user=await User.findOne({email});
+
+        if(!user){
+            throw new Error("user not found with email : ",email)
+        }
+
+        return user;
+        
+    } catch (error) {
+        console.log("error - ",error.message)
+        throw new Error(error.message)
+    }
+}
 
 
 
 module.exports={
     createUser,
     findUserById,
+    findUserByEmail,
 }
