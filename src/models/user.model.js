@@ -26,7 +26,7 @@ const userSchema = new mongoose.Schema({
   mobile: {
     type: String,
   },
-  addresses: [
+  address: [
     {
         type: mongoose.Schema.Types.ObjectId,
         ref: "addresses",
