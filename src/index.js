@@ -9,7 +9,11 @@ app.get("/",(req,res)=>{
     return res.status(200).send({message:"welcome to Hanger E-commerce api - node", status:true})
 })
 
-const authRouter=require("./routes/auth.route.js")
-app.use("/auth",authRouter)
+const authRouters=require("./routes/auth.route.js")
+app.use("/auth",authRouters)
+
+const userRouters=require("./routes/user.route.js");
+app.use("/users",userRouters)
+
 
 module.exports={app};
