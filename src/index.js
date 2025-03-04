@@ -13,7 +13,7 @@ const authRouters=require("./routes/auth.route.js")
 app.use("/auth",authRouters)
 
 const userRouters=require("./routes/user.route.js");
-app.use("/users",userRouters)
+app.use("/api/users",userRouters)
 
 
 module.exports={app};
