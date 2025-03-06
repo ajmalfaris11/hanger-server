@@ -130,6 +130,13 @@ async function getAllOrders() {
     .lean();
 }
 
+async function deleteOrder(orderId) {
+  const order = await findOrderById(orderId);
+  if (!order) throw new Error("order not found with id ", orderId);
+
+  await Order.findByIdAndDelete(orderId);
+}
+
 module.exports = {
   createOrder,
   placedOrder,
@@ -140,4 +147,5 @@ module.exports = {
   findOrderById,
   usersOrderHistory,
   getAllOrders,
+  deleteOrder,
 };
