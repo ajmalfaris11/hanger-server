@@ -78,4 +78,10 @@ async function shipOrder(orderId) {
   return await order.save();
 }
 
-module.exports = { createOrder, placedOrder, confirmedOrder, shipOrder };
+async function deliveredOrder(orderId) {
+  const order = await findOrderById(orderId);
+  order.orderStatus = "DELIVERED";
+  return await order.save();
+}
+
+module.exports = { createOrder, placedOrder, confirmedOrder, shipOrder, deliveredOrder };
