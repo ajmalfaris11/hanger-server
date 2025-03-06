@@ -66,4 +66,10 @@ async function placedOrder(orderId) {
   return await order.save();
 }
 
-module.exports = { createOrder, placedOrder };
+async function confirmedOrder(orderId) {
+  const order = await findOrderById(orderId);
+  order.orderStatus = "CONFIRMED";
+  return await order.save();
+}
+
+module.exports = { createOrder, placedOrder, confirmedOrder };
