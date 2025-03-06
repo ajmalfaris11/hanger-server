@@ -1,5 +1,5 @@
 const CartItem = require("../models/cartItem.model.js");
-const userService=require("../services/user.service.js");
+const userService = require("../services/user.service.js");
 
 // Create a new cart item
 async function createCartItem(cartItemData) {
@@ -47,16 +47,26 @@ async function updateCartItem(userId, cartItemId, cartItemData) {
 }
 
 // Remove a cart item
-async function removeCartItem(userId, cartItemId) {    
-    const cartItem = await findCartItemById(cartItemId);
-    const user = await userService.findUserById(cartItem.userId);
-    const reqUser = await userService.findUserById(userId);
-  
-    if (user.id === reqUser.id) {
-      await CartItem.findByIdAndDelete(cartItem.id);
-    } else {
-      throw new UserException("You can't remove another user's item");
-    }
-  }
+async function removeCartItem(userId, cartItemId) {
+  const cartItem = await findCartItemById(cartItemId);
+  const user = await userService.findUserById(cartItem.userId);
+  const reqUser = await userService.findUserById(userId);
 
-module.exports = { createCartItem, updateCartItem };
+  if (user.id === reqUser.id) {
+    await CartItem.findByIdAndDelete(cartItem.id);
+  } else {
+    throw new UserException("You can't remove another user's item");
+  }
+}
+
+// Find a cart item by its ID
+async function findCartItemById(cartItemId) {
+  const cartItem = await CartItem.findById(cartItemId).populate("product");
+  if (cartItem) {
+    return cartItem;
+  } else {
+    throw new CartItemException(`CartItem not found with id: ${cartItemId}`);
+  }
+}
+
+module.exports = { createCartItem, updateCartItem, removeCartItem, findCartItemById };
