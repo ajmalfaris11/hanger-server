@@ -84,4 +84,17 @@ async function deliveredOrder(orderId) {
   return await order.save();
 }
 
-module.exports = { createOrder, placedOrder, confirmedOrder, shipOrder, deliveredOrder };
+async function cancelledOrder(orderId) {
+  const order = await findOrderById(orderId);
+  order.orderStatus = "CANCELLED"; // Assuming OrderStatus is a string enum or a valid string value
+  return await order.save();
+}
+
+module.exports = {
+  createOrder,
+  placedOrder,
+  confirmedOrder,
+  shipOrder,
+  deliveredOrder,
+  cancelledOrder,
+};
