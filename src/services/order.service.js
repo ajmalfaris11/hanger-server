@@ -99,6 +99,26 @@ async function findOrderById(orderId) {
   return order;
 }
 
+async function usersOrderHistory(userId) {
+  try {
+    const orders = await Order.find({
+      user: userId,
+      orderStatus: "PLACED",
+    })
+      .populate({
+        path: "orderItems",
+        populate: {
+          path: "product",
+        },
+      })
+      .lean();
+
+    return orders;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+}
+
 module.exports = {
   createOrder,
   placedOrder,
@@ -106,4 +126,6 @@ module.exports = {
   shipOrder,
   deliveredOrder,
   cancelledOrder,
+  findOrderById,
+  usersOrderHistory,
 };
