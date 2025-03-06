@@ -90,6 +90,15 @@ async function cancelledOrder(orderId) {
   return await order.save();
 }
 
+async function findOrderById(orderId) {
+  const order = await Order.findById(orderId)
+    .populate("user")
+    .populate({ path: "orderItems", populate: { path: "product" } })
+    .populate("shippingAddress");
+
+  return order;
+}
+
 module.exports = {
   createOrder,
   placedOrder,
