@@ -46,6 +46,12 @@ async function updateCartItem(userId, cartItemId, cartItemData) {
   }
 }
 
+// Check if a cart item already exists in the user's cart
+async function isCartItemExist(cart, product, size, userId) {
+  const cartItem = await CartItem.findOne({ cart, product, size, userId });
+  return cartItem;
+}
+
 // Remove a cart item
 async function removeCartItem(userId, cartItemId) {
   const cartItem = await findCartItemById(cartItemId);
@@ -69,4 +75,10 @@ async function findCartItemById(cartItemId) {
   }
 }
 
-module.exports = { createCartItem, updateCartItem, removeCartItem, findCartItemById };
+module.exports = {
+  createCartItem,
+  updateCartItem,
+  isCartItemExist,
+  removeCartItem,
+  findCartItemById,
+};
