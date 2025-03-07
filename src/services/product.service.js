@@ -76,4 +76,9 @@ async function deleteProduct(productId) {
   return "Product deleted Successfully";
 }
 
-modules.export = { createProduct, deleteProduct };
+// Update a product by ID
+async function updateProduct(productId, reqData) {
+  return await Product.findByIdAndUpdate(productId, reqData);
+}
+
+modules.export = { createProduct, deleteProduct, updateProduct };
