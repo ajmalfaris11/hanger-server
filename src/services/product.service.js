@@ -81,4 +81,14 @@ async function updateProduct(productId, reqData) {
   return await Product.findByIdAndUpdate(productId, reqData);
 }
 
-modules.export = { createProduct, deleteProduct, updateProduct };
+// Find a product by ID
+async function findProductById(id) {
+  const product = await Product.findById(id).populate("category").exec();
+
+  if (!product) {
+    throw new Error("Product not found with id " + id);
+  }
+  return product;
+}
+
+modules.export = { createProduct, deleteProduct, updateProduct, findProductById };
