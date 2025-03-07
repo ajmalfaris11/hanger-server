@@ -63,4 +63,17 @@ async function createProduct(reqData) {
   return savedProduct;
 }
 
-modules.export = { createProduct };
+// Delete a product by ID
+async function deleteProduct(productId) {
+  const product = await findProductById(productId);
+
+  if (!product) {
+    throw new Error("product not found with id - : ", productId);
+  }
+
+  await Product.findByIdAndDelete(productId);
+
+  return "Product deleted Successfully";
+}
+
+modules.export = { createProduct, deleteProduct };
