@@ -14,6 +14,11 @@ async function createRating(req, user) {
   return await rating.save();
 }
 
+async function getProductsRating(productId) {
+  return await Rating.find({ product: productId });
+}
+
 module.exports = {
   createRating,
+  getProductsRating,
 };
