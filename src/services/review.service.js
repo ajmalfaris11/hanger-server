@@ -20,6 +20,20 @@ async function createReview(reqData, user) {
   return await review.save();
 }
 
+
+async function getAllReview(productId) {
+  const product = await productService.findProductById(productId);
+
+  if (!product) {
+    throw new Error("product not found with id ", productId);
+  }
+
+  const reviews = await Review.find({ product: productId }).populate("user");
+  console.log("reviews ", reviews);
+  return reviews;
+}
+
 module.exports = {
   createReview,
+  getAllReview,
 };
