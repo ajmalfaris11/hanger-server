@@ -9,6 +9,16 @@ const getAllOrders = async (req, res) => {
   }
 };
 
+const confirmedOrder = (req, res) => {
+  try {
+    const orderId = req.params.orderId;
+    const order = orderService.confirmedOrder(orderId);
+    res.status(202).json(order);
+  } catch (error) {
+    res.status(500).json({ error: "Something went wrong" });
+  }
+};
+
 const shippOrder = (req, res) => {
   try {
     const orderId = req.params.orderId;
@@ -21,5 +31,6 @@ const shippOrder = (req, res) => {
 
 module.exports = {
   getAllOrders,
+  confirmedOrder,
   shippOrder,
 };
