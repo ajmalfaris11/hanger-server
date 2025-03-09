@@ -16,4 +16,16 @@ const createReview = async (req, res) => {
   }
 };
 
-module.exports = { createReview };
+const getAllReview = async (req, res) => {
+  const productId = req.params.productId;
+  console.log("product id ", productId);
+  try {
+    const reviews = await reviewService.getAllReview(productId);
+    return res.status(201).send(reviews);
+  } catch (error) {
+    console.log("error --- ", error.message);
+    return res.status(500).json({ error: "Something went wrong" });
+  }
+};
+
+module.exports = { createReview, getAllReview };
