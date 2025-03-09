@@ -24,7 +24,7 @@ async function deleteProduct(req, res) {
 
 // Update a product by ID
 async function updateProduct(req, res) {
-    const productId = req.params.id;
+  const productId = req.params.id;
   try {
     const product = await productService.updateProduct(productId, req.body);
     return res.json(product);
@@ -33,4 +33,20 @@ async function updateProduct(req, res) {
   }
 }
 
-module.exports = { createProduct, deleteProduct, updateProduct };
+// Find a product by ID
+async function findProductById(req, res) {
+  try {
+    const productId = req.params.id;
+    const product = await productService.findProductById(productId);
+    return res.status(200).send(product);
+  } catch (err) {
+    return res.status(404).json({ message: err.message });
+  }
+}
+
+module.exports = {
+  createProduct,
+  deleteProduct,
+  updateProduct,
+  findProductById,
+};
