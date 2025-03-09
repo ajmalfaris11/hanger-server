@@ -13,7 +13,7 @@ async function createProduct(req, res) {
 
 // Delete a product by ID
 async function deleteProduct(req, res) {
-    const productId = req.params.id;
+  const productId = req.params.id;
   try {
     const message = await productService.deleteProduct(productId);
     return res.json({ message });
@@ -22,4 +22,15 @@ async function deleteProduct(req, res) {
   }
 }
 
-module.exports = { createProduct, deleteProduct };
+// Update a product by ID
+async function updateProduct(req, res) {
+    const productId = req.params.id;
+  try {
+    const product = await productService.updateProduct(productId, req.body);
+    return res.json(product);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
+
+module.exports = { createProduct, deleteProduct, updateProduct };
