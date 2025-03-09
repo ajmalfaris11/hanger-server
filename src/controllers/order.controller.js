@@ -14,4 +14,16 @@ const createOrder = async (req, res) => {
   }
 };
 
-module.exports = { createOrder };
+const findOrderById = async (req, res) => {
+  const user = req.user;
+  // console.log("userr ",user,req.body)
+  try {
+    let order = await orderService.findOrderById(req.params.id);
+
+    return res.status(201).send(order);
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+};
+
+module.exports = { createOrder, findOrderById };
