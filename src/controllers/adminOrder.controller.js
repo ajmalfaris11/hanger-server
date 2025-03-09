@@ -22,7 +22,7 @@ const confirmedOrder = async (req, res) => {
 };
 
 // Mark an order as shipped
-const shippOrder = async (req, res) => {
+const shipOrder = async (req, res) => {
   try {
     const orderId = req.params.orderId;
     const order = await orderService.shipOrder(orderId);
@@ -44,7 +44,7 @@ const deliverOrder = async (req, res) => {
 };
 
 // Cancel an order by ID
-const cancelledOrder = async (req, res) => {
+const canceledOrder = async (req, res) => {
   try {
     const orderId = req.params.orderId;
     const order = await orderService.cancelledOrder(orderId);
@@ -68,8 +68,8 @@ const deleteOrder = async (req, res) => {
 module.exports = {
   getAllOrders,
   confirmedOrder,
-  shippOrder,
+  shipOrder,
   deliverOrder,
-  cancelledOrder,
+  canceledOrder,
   deleteOrder,
 };
