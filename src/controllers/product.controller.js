@@ -11,4 +11,15 @@ async function createProduct(req, res) {
   }
 }
 
-module.exports = { createProduct };
+// Delete a product by ID
+async function deleteProduct(req, res) {
+    const productId = req.params.id;
+  try {
+    const message = await productService.deleteProduct(productId);
+    return res.json({ message });
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+}
+
+module.exports = { createProduct, deleteProduct };
