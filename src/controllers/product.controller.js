@@ -54,11 +54,22 @@ async function getAllProducts(req, res) {
   }
 }
 
+const createMultipleProduct = async (req, res) => {
+  try {
+    await productService.createMultipleProduct(req.body);
+    res
+      .status(202)
+      .json({ message: "Products Created Successfully", success: true });
+  } catch (error) {
+    res.status(500).json({ error: "Something went wrong" });
+  }
+};
+
 module.exports = {
   createProduct,
   deleteProduct,
   updateProduct,
   findProductById,
   getAllProducts,
-  
+  createMultipleProduct,
 };
