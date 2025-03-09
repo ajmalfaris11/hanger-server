@@ -44,6 +44,17 @@ async function findProductById(req, res) {
   }
 }
 
+// Search products by query
+async function searchProduct(req, res) {
+  try {
+    const query = req.params.query;
+    const products = await productService.searchProduct(query);
+    res.json(products);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
+
 // Find products by category
 async function getAllProducts(req, res) {
   try {
@@ -70,6 +81,7 @@ module.exports = {
   deleteProduct,
   updateProduct,
   findProductById,
+  searchProduct,
   getAllProducts,
   createMultipleProduct,
 };
