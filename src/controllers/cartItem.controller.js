@@ -17,4 +17,16 @@ const updateCartItem = async (req, res) => {
   }
 };
 
-module.exports = { updateCartItem };
+async function removeCartItem(req, res) {
+  const user = req.user;
+  try {
+    await cartItemService.removeCartItem(user._id, req.params.id);
+
+    return res.status(200).send({ message: "item removed", status: true });
+  } catch (err) {
+    console.log("error", err.message);
+    return res.status(500).json({ error: err.message });
+  }
+}
+
+module.exports = { updateCartItem, removeCartItem };

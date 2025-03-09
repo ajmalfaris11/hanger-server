@@ -7,7 +7,7 @@ const cartService = require("../services/cart.service.js");
 const findUserCart = async (req, res) => {
   const user = req.user;
   try {
-    const cart = await cartService.findUserCart(user.id);
+    const cart = await cartService.findUserCart(user._id);
     res.status(201).json(cart);
   } catch (error) {
     // Handle error here and send appropriate response
@@ -21,7 +21,7 @@ const findUserCart = async (req, res) => {
 const addItemToCart = async (req, res) => {
   const user = req.user;
   try {
-    await cartService.addCartItem(user._id.toString(), req.body);
+    await cartService.addCartItem(user._id, req.body);
 
     res
       .status(201)
