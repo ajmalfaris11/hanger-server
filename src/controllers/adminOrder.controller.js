@@ -49,10 +49,23 @@ const cancelledOrder = (req, res) => {
   }
 };
 
+const deleteOrder = (req, res) => {
+  try {
+    const orderId = req.params.orderId;
+    orderService.deleteOrder(orderId);
+    res
+      .status(202)
+      .json({ message: "Order Deleted Successfully", success: true });
+  } catch (error) {
+    res.status(500).json({ error: "Something went wrong" });
+  }
+};
+
 module.exports = {
   getAllOrders,
   confirmedOrder,
   shippOrder,
   deliverOrder,
   cancelledOrder,
+  deleteOrder,
 };
