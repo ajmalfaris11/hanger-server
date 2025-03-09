@@ -29,8 +29,19 @@ const shippOrder = (req, res) => {
   }
 };
 
+const deliverOrder = (req, res) => {
+  try {
+    const orderId = req.params.orderId;
+    const order = orderService.deliveredOrder(orderId);
+    return res.status(202).send(order);
+  } catch (error) {
+    return res.status(500).json({ error: "Something went wrong" });
+  }
+};
+
 module.exports = {
   getAllOrders,
   confirmedOrder,
   shippOrder,
+  deliverOrder,
 };
