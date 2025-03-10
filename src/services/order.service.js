@@ -1,6 +1,6 @@
 const cartService = require("../services/cart.service.js");
 const Address = require("../models/address.model.js");
-const OrderItem = require("../models/orderItems.js");
+const OrderItem = require("../models/orderItems.model.js");
 const Order = require("../models/order.model.js");
 
 //  Create a new order for a user

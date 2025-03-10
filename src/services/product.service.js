@@ -1,4 +1,4 @@
-const Category = require("../models/category.model");
+const Category = require("../models/catagory.model");
 const Product = require("../models/product.model");
 
 // Create a new product
@@ -172,7 +172,7 @@ async function createMultipleProduct(products) {
   }
 }
 
-modules.export = {
+module.exports = {
   createProduct,
   deleteProduct,
   updateProduct,

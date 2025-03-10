@@ -16,11 +16,11 @@ app.get("/", (req, res) => {
 });
 
 // Import and use authentication routes
-const authRouters = require("./routes/auth.route.js");
+const authRouters = require("./routes/auth.routes.js");
 app.use("/auth", authRouters);
 
 // Import and use user-related routes
-const userRouters = require("./routes/user.route.js");
+const userRouters = require("./routes/user.routes.js");
 app.use("/api/users", userRouters);
 
 // Import and use product-related routes
