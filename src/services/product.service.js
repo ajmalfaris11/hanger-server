@@ -2,66 +2,49 @@ const Category = require("../models/catagory.model");
 const Product = require("../models/product.model");
 
 // Create a new product
+// Create a new product
 async function createProduct(reqData) {
-  let topLevel = await Category.findOne({ name: reqData.topLavelCategory });
+  try {
+    let topLevel = await Category.findOneAndUpdate(
+      { name: reqData.topLevelCategory },
+      { $setOnInsert: { level: 1 } },
+      { new: true, upsert: true }
+    );
 
-  if (!topLevel) {
-    const topLavelCategory = new Category({
-      name: reqData.topLavelCategory,
-      level: 1,
+    let secondLevel = await Category.findOneAndUpdate(
+      { name: reqData.secondLevelCategory, parentCategory: topLevel._id },
+      { $setOnInsert: { level: 2, parentCategory: topLevel._id } },
+      { new: true, upsert: true }
+    );
+
+    let thirdLevel = await Category.findOneAndUpdate(
+      { name: reqData.thirdLevelCategory, parentCategory: secondLevel._id },
+      { $setOnInsert: { level: 3, parentCategory: secondLevel._id } },
+      { new: true, upsert: true }
+    );
+
+    const product = new Product({
+      title: reqData.title,
+      color: reqData.color,
+      description: reqData.description,
+      discountedPrice: reqData.discountedPrice,
+      discountPercent: reqData.discountPercent, // Fixed key name
+      imageUrl: reqData.imageUrl,
+      brand: reqData.brand,
+      price: reqData.price,
+      sizes: reqData.size,
+      quantity: reqData.quantity,
+      category: thirdLevel._id,
     });
 
-    topLevel = await topLavelCategory.save();
+    const savedProduct = await product.save();
+    return savedProduct;
+  } catch (error) {
+    console.error("Error creating product:", error);
+    throw new Error("Product creation failed.");
   }
-
-  let secondLevel = await Category.findOne({
-    name: reqData.secondLavelCategory,
-    parentCategory: topLevel._id,
-  });
-
-  if (!secondLevel) {
-    const secondLavelCategory = new Category({
-      name: reqData.secondLavelCategory,
-      parentCategory: topLevel._id,
-      level: 2,
-    });
-
-    secondLevel = await secondLavelCategory.save();
-  }
-
-  let thirdLevel = await Category.findOne({
-    name: reqData.thirdLavelCategory,
-    parentCategory: secondLevel._id,
-  });
-
-  if (!thirdLevel) {
-    const thirdLavelCategory = new Category({
-      name: reqData.thirdLavelCategory,
-      parentCategory: secondLevel._id,
-      level: 3,
-    });
-
-    thirdLevel = await thirdLavelCategory.save();
-  }
-
-  const product = new Product({
-    title: reqData.title,
-    color: reqData.color,
-    description: reqData.description,
-    discountedPrice: reqData.discountedPrice,
-    discountPersent: reqData.discountPersent,
-    imageUrl: reqData.imageUrl,
-    brand: reqData.brand,
-    price: reqData.price,
-    sizes: reqData.size,
-    quantity: reqData.quantity,
-    category: thirdLevel._id,
-  });
-
-  const savedProduct = await product.save();
-
-  return savedProduct;
 }
+
 
 // Delete a product by ID
 async function deleteProduct(productId) {
