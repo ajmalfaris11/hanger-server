@@ -18,7 +18,7 @@ const updateCartItem = async (req, res) => {
 };
 
 async function removeCartItem(req, res) {
-  const user = req.user;
+  const user = await req.user;
   try {
     await cartItemService.removeCartItem(user._id, req.params.id);
 
