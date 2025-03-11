@@ -67,7 +67,7 @@ async function removeCartItem(userId, cartItemId) {
 
 // Find a cart item by its ID
 async function findCartItemById(cartItemId) {
-  const cartItem = await CartItem.findById(cartItemId);
+  const cartItem = await CartItem.findById(cartItemId).populate("product");
   if (cartItem) {
     return cartItem;
   } else {
