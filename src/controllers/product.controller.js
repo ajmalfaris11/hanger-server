@@ -48,7 +48,17 @@ async function findProductById(req, res) {
 async function searchProduct(req, res) {
   try {
     const query = req.params.query;
+    if (!query) {
+      return res.status(400).json({ error: "Search query is required" });
+    }
+
     const products = await productService.searchProduct(query);
+    console.log("=====product",products)
+
+    if (products.length === 0) {
+      return res.status(404).json({ message: "No products found" });
+    }
+
     res.json(products);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -59,6 +69,7 @@ async function searchProduct(req, res) {
 async function getAllProducts(req, res) {
   try {
     const products = await productService.getAllProducts(req.query);
+    console.log("======Product ", products);
     res.json(products);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -67,7 +78,8 @@ async function getAllProducts(req, res) {
 
 const createMultipleProduct = async (req, res) => {
   try {
-    await productService.createMultipleProduct(req.body);
+   await productService.createMultipleProduct(req.body);
+   
     res
       .status(202)
       .json({ message: "Products Created Successfully", success: true });
