@@ -26,11 +26,13 @@ async function findUserCart(userId) {
     let totalPrice = 0;
     let totalDiscountedPrice = 0;
     let totalItem = 0;
+    let totalDiscount = 0;
 
     for (const cartItem of cart.cartItems) {
       totalPrice += cartItem.price;
       totalDiscountedPrice += cartItem.discountedPrice;
       totalItem += cartItem.quantity;
+      totalDiscount += cartItem.price - cartItem.discountedPrice;
     }
 
     cart.totalPrice = totalPrice;
@@ -63,7 +65,7 @@ async function addCartItem(userId, req) {
         cart: cart._id,
         quantity: 1,
         userId,
-        price: product.discountedPrice,
+        price: product.price,
         size: req.size,
         discountedPrice: product.discountedPrice,
       });
