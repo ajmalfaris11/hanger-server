@@ -45,5 +45,34 @@ const createPaymentLink= async (orderId)=>{
       }
 }
 
+const updatePaymentInformation=async(reqData)=>{
+    const paymentId = reqData.payment_id;
+  const orderId = reqData.order_id;
 
-module.exports={createPaymentLink}
+  try {
+    // Fetch order details (You will need to implement the 'orderService.findOrderById' function)
+    const order = await orderService.findOrderById(orderId);
+
+    // Fetch the payment details using the payment ID
+    const payment = await razorpay.payments.fetch(paymentId);
+  
+
+    if (payment.status === 'captured') {
+     
+
+      order.paymentDetails.paymentId=paymentId;
+      order.paymentDetails.status='COMPLETED'; 
+      order.orderStatus='PLACED';
+     
+      await order.save()
+    }
+    console.log( 'payment status',order);
+    const resData = { message: 'Your order is placed', success: true };
+    return resData
+  } catch (error) {
+    console.error('Error processing payment:', error);
+    throw new Error(error.message)
+  }
+}
+
+module.exports={createPaymentLink,updatePaymentInformation}
