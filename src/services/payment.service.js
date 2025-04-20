@@ -10,7 +10,7 @@ const createPaymentLink= async (orderId)=>{
         const order = await orderService.findOrderById(orderId);
     
         const paymentLinkRequest = {
-          amount: order.totalPrice * 100,
+          amount: order.totalDiscountedPrice * 100,
           currency: 'INR',
           customer: {
             name: order.user.firstName + ' ' + order.user.lastName,
@@ -22,7 +22,7 @@ const createPaymentLink= async (orderId)=>{
             email: true,
           },
           reminder_enable: true,
-          callback_url: `https://localhost:3000/payment/${orderId}`,
+          callback_url: `http://localhost:3000/payment/${orderId}`,
           callback_method: 'get',
         };
     
