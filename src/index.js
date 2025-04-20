@@ -55,5 +55,10 @@ app.use("/api/ratings", ratingRouter);
 const adminOrderRoutes = require("./routes/adminOrder.routes.js");
 app.use("/api/admin/orders", adminOrderRoutes);
 
+// Import and use payment-related routes
+const paymentRouter=require("./routes/payment.routes.js");
+app.use('/api/payments',paymentRouter)
+
+
 // Export the app module
 module.exports = { app };
