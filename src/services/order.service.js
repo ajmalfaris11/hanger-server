@@ -86,7 +86,7 @@ async function deliveredOrder(orderId) {
 
 async function cancelledOrder(orderId) {
   const order = await findOrderById(orderId);
-  order.orderStatus = "CANCELLED"; // Assuming OrderStatus is a string enum or a valid string value
+  order.orderStatus = "CANCELED"; // Assuming OrderStatus is a string enum or a valid string value
   return await order.save();
 }
 
