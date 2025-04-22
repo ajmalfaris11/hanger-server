@@ -5,7 +5,7 @@ const app = express();
 
 // CORS options configuration
 const corsOptions = {
-  origin: "https://hanger-client.vercel.app/", // Allow requests from this origin
+  origin: "https://hanger-client.vercel.app", // Allow requests from this origin
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",    // Allowed HTTP methods
   credentials: true,                            // Allow credentials (cookies, auth headers, etc.)
 };
