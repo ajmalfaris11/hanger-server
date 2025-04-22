@@ -1,64 +1,52 @@
 const express = require("express");
 const cors = require("cors");
+
 const app = express();
 
-// Middleware to parse JSON requests
-app.use(express.json());
+// CORS options configuration
+const corsOptions = {
+  origin: "https://hanger-client.vercel.app/", // Allow requests from this origin
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",    // Allowed HTTP methods
+  credentials: true,                            // Allow credentials (cookies, auth headers, etc.)
+};
 
-// Enable CORS for cross-origin requests
-app.use(cors());
+// Middleware setup
+app.use(cors(corsOptions));   // Enable CORS with custom options
+app.use(express.json());      // Parse JSON request bodies
 
 // Root route - Welcome message
 app.get("/", (req, res) => {
-  return res
-    .status(200)
-    .send({ message: "Welcome to Hanger E-commerce API - Node", status: true });
+  res.status(200).send({
+    message: "Welcome to Hanger E-commerce API - Node",
+    status: true,
+  });
 });
 
-// Import and use authentication routes
+// Import route modules
 const authRouters = require("./routes/auth.routes.js");
-app.use("/auth", authRouters);
-
-// Import and use user-related routes
 const userRouters = require("./routes/user.routes.js");
-app.use("/api/users", userRouters);
-
-// Import and use product-related routes
 const productRouter = require("./routes/product.routes.js");
-app.use("/api/products", productRouter);
-
-// Import and use admin-specific product routes
 const adminProductRouter = require("./routes/adminProduct.routes.js");
-app.use("/api/admin/products", adminProductRouter);
-
-// Import and use cart-related routes
 const cartRouter = require("./routes/cart.routes.js");
-app.use("/api/cart", cartRouter);
-
-// Import and use cart item-related routes
 const cartItemRouter = require("./routes/cartItem.routes.js");
-app.use("/api/cart_items", cartItemRouter);
-
-// Import and use order-related routes
 const orderRouter = require("./routes/order.routes.js");
-app.use("/api/orders", orderRouter);
-
-// Import and use review-related routes
 const reviewRouter = require("./routes/review.routes.js");
-app.use("/api/reviews", reviewRouter);
-
-// Import and use rating-related routes
 const ratingRouter = require("./routes/rating.routes.js");
-app.use("/api/ratings", ratingRouter);
-
-// Import and use admin-specific order routes
 const adminOrderRoutes = require("./routes/adminOrder.routes.js");
+const paymentRouter = require("./routes/payment.routes.js");
+
+// Mount routes to their respective base paths
+app.use("/auth", authRouters);
+app.use("/api/users", userRouters);
+app.use("/api/products", productRouter);
+app.use("/api/admin/products", adminProductRouter);
+app.use("/api/cart", cartRouter);
+app.use("/api/cart_items", cartItemRouter);
+app.use("/api/orders", orderRouter);
+app.use("/api/reviews", reviewRouter);
+app.use("/api/ratings", ratingRouter);
 app.use("/api/admin/orders", adminOrderRoutes);
+app.use("/api/payments", paymentRouter);
 
-// Import and use payment-related routes
-const paymentRouter=require("./routes/payment.routes.js");
-app.use('/api/payments',paymentRouter)
-
-
-// Export the app module
+// Export the app
 module.exports = { app };
