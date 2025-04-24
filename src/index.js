@@ -5,10 +5,15 @@ const app = express();
 
 // CORS options configuration
 const corsOptions = {
-  origin: "https://hanger-client.vercel.app", // Allow requests from this origin
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",    // Allowed HTTP methods
-  credentials: true,                            // Allow credentials (cookies, auth headers, etc.)
+  origin: [
+    'http://localhost:3000',
+    'https://hanger-client.vercel.app'
+  ],
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true,
 };
+
+app.use(cors(corsOptions));
 
 // Middleware setup
 app.use(cors(corsOptions));   // Enable CORS with custom options
