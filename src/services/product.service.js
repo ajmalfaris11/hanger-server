@@ -89,7 +89,7 @@ async function getAllProducts(reqQuery) {
     pageSize,
   } = reqQuery;
 
-  pageSize = Math.max(parseInt(pageSize) || 10, 1);
+  pageSize = Math.max(parseInt(pageSize) || 100, 1);
   pageNumber = Math.max(parseInt(pageNumber) || 1, 1);
 
   let query = Product.find().populate("category");
