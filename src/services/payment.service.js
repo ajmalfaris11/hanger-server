@@ -1,5 +1,7 @@
 const razorpay = require("../config/razorpayClient");
 const orderService = require("../services/order.service.js");
+const cartService = require("./cart.service.js");
+
 
 const createPaymentLink = async (orderId) => {
   const isProduction = process.env.NODE_ENV === 'production'; 
@@ -54,6 +56,9 @@ const updatePaymentInformation = async (reqData) => {
       order.orderStatus = 'PLACED';
 
       await order.save();
+
+      // ✅ Clear the cart after payment is captured
+      await cartService.clearCart(order.user._id); 
     }
 
     console.log('payment status', order);
@@ -63,5 +68,6 @@ const updatePaymentInformation = async (reqData) => {
     throw new Error(error.message);
   }
 };
+
 
 module.exports = { createPaymentLink, updatePaymentInformation };

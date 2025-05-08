@@ -84,4 +84,30 @@ async function addCartItem(userId, req) {
   }
 }
 
-module.exports = { createCart, findUserCart, addCartItem };
+// Clear the user's cart after successful payment
+async function clearCart(userId) {
+  try {
+    const cart = await Cart.findOne({ user: userId });
+
+    if (!cart) throw new Error("Cart not found");
+
+    // Delete all CartItems linked to this cart
+    await CartItem.deleteMany({ cart: cart._id });
+
+    // Optionally reset cart summary values
+    cart.totalPrice = 0;
+    cart.totalItem = 0;
+    cart.totalDiscountedPrice = 0;
+    cart.discounte = 0;
+    cart.cartItems = [];
+
+    await cart.save();
+
+    return { message: "Cart cleared successfully" };
+  } catch (error) {
+    throw new Error(error.message);
+  }
+}
+
+
+module.exports = { createCart, findUserCart, addCartItem, clearCart };
